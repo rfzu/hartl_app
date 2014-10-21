@@ -57,6 +57,11 @@ describe "Authentication" do
           specify { expect(response).to redirect_to(signin_path) }
         end
 
+        describe "submitting to the update action" do
+          before { patch user_path(user) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+
         describe "as wrong user" do
           let(:user) { FactoryGirl.create(:user) }
           let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }
