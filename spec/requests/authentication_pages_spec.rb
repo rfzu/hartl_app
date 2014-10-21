@@ -43,23 +43,23 @@ describe "Authentication" do
 
   describe "autorization" do
 
-    describe "for non-signed-in users" do
-      let(:user) { FactoryGirl.create(:user) }
+  describe "for non-signed-in users" do
+    let(:user) { FactoryGirl.create(:user) }
 
-      describe "when attempting to visit a protected page" do
-        before do
-          visit edit_user_path(user)
-          fill_in "Email", with: user.email
-          fill_in "Password", with: user.password 
-          click_button "Sign in"
-        end
+    describe "when attempting to visit a protected page" do
+      before do
+        visit edit_user_path(user)
+        fill_in "Email", with: user.email
+        fill_in "Password", with: user.password 
+        click_button "Sign in"
+      end
 
-        describe "after signung in" do 
-          it "should render the desired protected page" do
-            expect(page).to have_title('Edit user')
-          end
+      describe "after signung in" do 
+        it "should render the desired protected page" do
+          expect(page).to have_title('Edit user')
         end
       end
+    end
 
       describe "in the Users controller" do
 
@@ -103,6 +103,17 @@ describe "Authentication" do
       end
     end
 
-  end
+    describe "as non-admin user" do 
+      let(:user) { FactoryGirl.create(:user) }
+      let(:non_admin) { FactoryGirl.create(:user) }
 
+      before { sign_in non_admin, no_capybara: true }
+
+      describe "submitting a DELETE request to the Users#destroy action" do 
+        before { delete user_path(user) }
+        specify { expect(response).to redirect_to(root_url) }
+      end
+    end
+
+  end
 end
