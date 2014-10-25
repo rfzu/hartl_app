@@ -10,7 +10,9 @@ gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 gem 'sprockets', '2.11.0'
-gem 'newrelic_rpm'
+#gem 'newrelic_rpm'
+
+gem 'capistrano'
 
 group :development, :test do
   gem 'sqlite3', '1.3.8'
